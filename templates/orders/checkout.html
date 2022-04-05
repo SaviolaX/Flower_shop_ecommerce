@@ -1,0 +1,41 @@
+{% extends '_base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+    
+    <h1>Checkout</h1>
+
+    <div style="width: 58%; float: left">
+        <form method="POST">
+            {% csrf_token %}
+            {{ order_form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div style="width: 38%; display: inline-block;">
+        <h3 style="text-align: center;">Cart</h3>
+        {% if items.all.count != 0 %}
+        <table style="width: 80%; border: 2px solid black; margin: 0 auto 0 auto;">
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            {% for item in items %}
+            <tr style="text-align: center;">
+                <td>{{ item.product.product_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+        <div style="text-align: center;">
+            <p>Total items: {{ total_items }}</p>
+            <p>Total price: {{ total_sum }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

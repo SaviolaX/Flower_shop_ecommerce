@@ -1,0 +1,40 @@
+{% extends '_base.html' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+    <h1>Cart</h1>
+
+    {% if items.all.count != 0 %}
+    <table style="width: 80%; margin-left: auto; margin-right: auto; border: 2px solid black;">
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        {% for item in items %}
+        <tr style="text-align: center;">
+            <td>{{ item.product.product_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price }}</td>
+            <td><a href="{% url 'remove_item' item.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    <div>
+        <p>Total items: {{ total_items }}</p>
+        <p>Total price: {{ total_sum }}</p>
+    </div>
+    <div>
+        |--
+        <a href="{% url 'checkout' %}">Checkout</a>
+        --||--
+        <a href="{% url 'product_categories' %}">Continue to shopping</a>
+        --|
+    </div>
+    {% else %}
+        <h3>No items in the cart yet....</h3>
+    {% endif %}
+
+{% endblock %}
